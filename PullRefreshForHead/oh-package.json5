@@ -1,0 +1,13 @@
+{
+  "name": "pullrefreshdemo",
+  "version": "1.0.0",
+  "description": "A component for HarmonyOS that can simultaneously implement dynamic grouping lists for pull-down refreshing and pull-up loading",
+  "main": "",
+  "author": "HLL",
+  "license": "",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@ohos/hypium": "1.0.15"
+  }
+}

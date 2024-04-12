@@ -1,0 +1,9 @@
+{
+  "module": {
+    "name": "lib_pullrefresh",
+    "type": "har",
+    "deviceTypes": [
+      "default"
+    ]
+  }
+}
