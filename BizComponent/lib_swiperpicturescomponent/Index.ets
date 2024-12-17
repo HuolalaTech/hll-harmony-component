@@ -1,0 +1,5 @@
+export { SwiperComponentUIBean } from './src/main/ets/components/swiperpicturescomponent/SwiperComponentUIBean'
+export { SwiperImageComponent } from './src/main/ets/components/swiperpicturescomponent/SwiperImageComponent'
+export { SwiperImageUiBean } from './src/main/ets/components/swiperpicturescomponent/SwiperImageUiBean'
+export { SwiperImageArray } from './src/main/ets/components/swiperpicturescomponent/SwiperImageUiBean'
+export { SelSwiperTabSource } from './src/main/ets/components/swiperpicturescomponent/SwiperImageUiBean'

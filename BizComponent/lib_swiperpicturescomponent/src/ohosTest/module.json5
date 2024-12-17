@@ -1,0 +1,13 @@
+{
+  "module": {
+    "name": "lib_swiperpicturescomponent_test",
+    "type": "feature",
+    "deviceTypes": [
+      "default",
+      "tablet",
+      "2in1"
+    ],
+    "deliveryWithInstall": true,
+    "installationFree": false
+  }
+}
