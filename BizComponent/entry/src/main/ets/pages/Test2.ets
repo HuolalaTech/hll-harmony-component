@@ -1,13 +1,15 @@
 import {
   SelSwiperTabSource,
-  SwiperImageArray, SwiperImageComponent, SwiperImageUiBean } from "lib_swiperpicturescomponent"
-
+  SwiperImageArray,
+  SwiperImageComponent,
+  SwiperImageUiBean
+} from "lib_swiperpicturescomponent"
 
 
 @Entry
 @Component
 export struct Test2 {
-  /**车型图片列表*/
+  /**图片列表*/
   @State swiperImageArray: SwiperImageArray = new SwiperImageArray()
   @State currentVehicleIndex: number = 0
 
@@ -41,22 +43,13 @@ export struct Test2 {
         vehicleImageArray: this.swiperImageArray,
         currentVehicleIndex: this.currentVehicleIndex,
         indexChangeAction: (source: SelSwiperTabSource, index: number) => {
-          this.onIndexChangeWithImage(source, index)
+
+        },
+        onImageClick: (imageBean: SwiperImageUiBean) => {
         }
       })
       Blank().layoutWeight(1)
     }.padding({ bottom: 12 })
-
-  }
-
-  /**车图左右滑动，切换车型下标*/
-  private onIndexChangeWithImage(source: SelSwiperTabSource, index: number) {
-    console.log("====滑动的index===="+index)
-    console.log("====source的type===="+source.valueOf())
-    //下标没变
-    if (index == this.currentVehicleIndex) {
-      return
-    }
 
   }
 }

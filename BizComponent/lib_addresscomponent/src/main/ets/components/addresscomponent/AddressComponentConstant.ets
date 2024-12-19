@@ -9,7 +9,7 @@ export class AddressComponentConstant {
 
 
 /**
- * 其他UI的元素
+ * 地址列表UI的元素
  */
 @Observed
 export class CommonComponentUIBean {

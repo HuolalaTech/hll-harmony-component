@@ -1,12 +1,24 @@
 import { CommonComponentUIBean } from './AddressComponentConstant'
 import { StandardOrderAddressBean } from './StandardOrderAddressBean'
 
+
+/**
+ * 构建地址信息item
+ */
 @Component
 export struct ItemInfoComponent {
-  //地址信息
-  @ObjectLink address: StandardOrderAddressBean
+  /**
+   * UI的设置参数
+   */
   @State private commonUIBean: CommonComponentUIBean = new CommonComponentUIBean()
+  /**
+   * 地址信息
+   */
+  @ObjectLink address: StandardOrderAddressBean
 
+  /**
+   * 绘制UI
+   */
   build() {
     Column() {
       RelativeContainer() {

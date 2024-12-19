@@ -5,7 +5,7 @@ import { CommonComponentUIBean } from './AddressComponentConstant'
 
 
 /**
- * 标准下单 地址
+ * 地址组建
  */
 @Component
 export struct AddressComponent {
@@ -17,7 +17,6 @@ export struct AddressComponent {
    * 一般UI元素
    */
   @State commonUIBean: CommonComponentUIBean = new CommonComponentUIBean()
-
   /**
    * 点击地址
    */
@@ -42,8 +41,12 @@ export struct AddressComponent {
    */
   onDelAddressClick?: (index: number) => void
 
+  /**
+   * 绘制UI
+   */
   build() {
     Stack() {
+      // 普通地址（就两个地址的时候，没有拖动效果，只能交换）
       NormalAddressList({
         addressArray: this.addressArray,
         commonUIBean: this.commonUIBean,
@@ -57,6 +60,7 @@ export struct AddressComponent {
           this.onAddAddressClick?.()
         }
       })
+      // 拖动地址
       DragAddressList({
         addressArray: this.addressArray,
         commonUIBean: this.commonUIBean,

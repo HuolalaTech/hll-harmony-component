@@ -1,15 +1,19 @@
 
 
-/**车型展示图片对象*/
+/**
+ * 图片信息
+ */
 @Observed
 export class SwiperImageUiBean {
-  /**车型id*/
+  /**图片id*/
   swiperId: number = 0
-  /**车型图片*/
+  /**图片图片*/
   imageUrl?: string|Resource
 }
 
-
+/**
+ * 图片列表
+ */
 @Observed
 export class SwiperImageArray extends Array<SwiperImageUiBean> {
 
@@ -17,47 +21,16 @@ export class SwiperImageArray extends Array<SwiperImageUiBean> {
 
 
 
-
-export class SwiperStdItem {
-  type: number = 0
-  name: string = ""
-  value_fen: number = 0
-  std_detail: string = ""
-  is_checked: number = 0
-  img: string = ""
-  short_name: string = ""
-
-  /**
-   * 优先使用short_name，没有使用 name
-   */
-  customShortName: string = ""
-
-  /**
-   * 是否是接口默认选中
-   */
-  isApiChecked: boolean = false
-
-  /**
-   * 冷运温控图，冷运专属参数
-   */
-  refrigerated_img?: string[]
-  /**
-   * 对应冷运车型的国标id
-   */
-  jump_id: number = 0
-}
-
-
-/**改变车型的来源*/
+/**改变图片的来源*/
 export enum SelSwiperTabSource {
-  /**上一个车型*/
+  /**上一个图片*/
   SOURCE_PRE_ARROW_CLICK,
-  /**下一个车型*/
+  /**下一个图片*/
   SOURCE_NEXT_ARROW_CLICK,
-  /**点击车型名称*/
+  /**点击图片名称*/
   SOURCE_TAB_CLICK,
   /**代码触发*/
   SOURCE_TAB_CODE,
-  /**滑动车型动画viewpager触发*/
+  /**滑动图片动画viewpager触发*/
   SOURCE_TAB_VIEW_PAGER,
 }

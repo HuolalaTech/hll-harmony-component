@@ -3,24 +3,37 @@ import { NormalAddressComponent } from './NormalAddressComponent'
 import { StandardAddressBeanArray } from './StandardAddressBeanArray'
 import { StandardOrderAddressBean } from './StandardOrderAddressBean'
 
+
+/**
+ * 普通地址列表
+ */
 @Component
 export struct NormalAddressList {
-  @ObjectLink addressArray: StandardAddressBeanArray
+  /**
+   * UI设置参数
+   */
   @State commonUIBean: CommonComponentUIBean = new CommonComponentUIBean()
+  /**
+   * 地址列表数据源
+   */
+  @ObjectLink addressArray: StandardAddressBeanArray
+  /**
+   * 监听点击地址
+   *
+   */
   onAddressClick?: (index: number) => void
+  /**
+   * 监听添加地址
+   */
   onAddAddressClick?: () => void
+  /**
+   * 监听交换地址
+   */
   onExchangeAddressClick?: () => void
 
-  /**交换两个地址数据*/
-  private exchangeAddress(index: number, newIndex: number): void {
-    console.log("itemMoveTest before index =  " + index + " , newIndex = " + newIndex)
-    let tmp = this.addressArray.splice(index, 1)
-    this.addressArray.splice(newIndex, 0, tmp[0])
-    this.addressArray.forEach((bean: StandardOrderAddressBean, index: number) => {
-      bean.index = index;
-    })
-  }
-
+  /**
+   * 绘制UI
+   */
   build() {
     Row() {
       Stack() {
@@ -58,7 +71,7 @@ export struct NormalAddressList {
           this.onExchangeAddressClick?.()
         })
 
-      //途经点
+      //添加途经点
       Row() {
         Image(this.commonUIBean.passingAddressIcon)
           .height(10)
@@ -107,5 +120,19 @@ export struct NormalAddressList {
     .borderColor('#FFFFFF')
     .alignItems(VerticalAlign.Center)
     .visibility(this.addressArray.length <= 2 ? Visibility.Visible : Visibility.None)
+  }
+
+  /**
+   * 交换两个地址数据
+   * @param index
+   * @param newIndex
+   */
+  private exchangeAddress(index: number, newIndex: number): void {
+    console.log("itemMoveTest before index =  " + index + " , newIndex = " + newIndex)
+    let tmp = this.addressArray.splice(index, 1)
+    this.addressArray.splice(newIndex, 0, tmp[0])
+    this.addressArray.forEach((bean: StandardOrderAddressBean, index: number) => {
+      bean.index = index;
+    })
   }
 }

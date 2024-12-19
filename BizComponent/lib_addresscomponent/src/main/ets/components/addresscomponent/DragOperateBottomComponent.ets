@@ -1,12 +1,24 @@
 import { CommonComponentUIBean } from './AddressComponentConstant'
 
+
+/**
+ * 拖动地址列表下面的操作按钮组建（目前只有增加地址按钮）
+ */
 @Component
 export struct DragOperateBottomComponent {
-  onAddAddressClick?: () => void
+  /**
+   * 设置地址列表UI
+   */
   @State private commonUIBean: CommonComponentUIBean = new CommonComponentUIBean()
+  /**
+   * 监听添加地址
+   */
+  onAddAddressClick?: () => void
 
+  /**
+   * 绘制UI
+   */
   build() {
-    Row() {
       Row() {
         Image(this.commonUIBean.passingAddressIcon)
           .height(10)
@@ -31,11 +43,10 @@ export struct DragOperateBottomComponent {
           .backgroundColor(Color.Transparent)
         }
       })
-      .margin({ left: 12 })
+      .margin({ top: 8,bottom: 8})
       .padding({ left: 8, right: 8, })
       .onClick(() => {
         this.onAddAddressClick?.()
       })
-    }.height(40)
   }
 }

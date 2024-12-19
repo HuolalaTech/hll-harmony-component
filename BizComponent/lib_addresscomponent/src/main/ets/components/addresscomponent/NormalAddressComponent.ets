@@ -3,14 +3,34 @@ import { ItemDotComponent } from './ItemDotComponent'
 import { ItemInfoComponent } from './ItemInfoComponent'
 import { StandardOrderAddressBean } from './StandardOrderAddressBean'
 
+
+/**
+ * 普通地址列表item
+ */
 @Component
 export struct NormalAddressComponent {
-  //地址信息
-  @ObjectLink address: StandardOrderAddressBean
+  /**
+   * UI设置参数
+   */
   @State commonUIBean: CommonComponentUIBean = new CommonComponentUIBean()
+  /**
+   * 地址信息
+   */
+  @ObjectLink address: StandardOrderAddressBean
+  /**
+   * 地址列表总长度
+   */
   @Prop private allLength: number = 2
+
+  /**
+   * 监听点击地址
+   */
   onAddressClick?: (index: number) => void
 
+
+  /**
+   * 绘制UI
+   */
   build() {
     Row() {
       //icon小圆点

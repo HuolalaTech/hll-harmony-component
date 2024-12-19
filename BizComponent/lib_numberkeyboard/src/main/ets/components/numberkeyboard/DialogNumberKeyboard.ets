@@ -4,9 +4,19 @@
 @Preview
 @Component
 export struct DialogNumberKeyboard {
+  /**
+   * 键盘数字源（-1 显示空格，-2显示删除按键）
+   */
+  @State numbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, -1, 0, -2]
+  /**
+   * 监听数字点击
+   */
   onNumberClick?: (number: number) => void
-  numbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, -1, 0, -2]
 
+  /**
+   * 绘制数字按键
+   * @param key
+   */
   @Builder
   NumberText(key: number) {
     if (key >= 0) {
@@ -61,6 +71,9 @@ export struct DialogNumberKeyboard {
     }
   }
 
+  /**
+   * 绘制UI
+   */
   build() {
     Column() {
       Grid() {
@@ -73,7 +86,6 @@ export struct DialogNumberKeyboard {
       .columnsGap(3)
       .rowsGap(4)
       .backgroundColor($r('app.color.light_bg_grey'))
-
     }.width('100%')
 
   }

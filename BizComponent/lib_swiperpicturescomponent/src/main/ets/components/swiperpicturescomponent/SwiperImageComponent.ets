@@ -1,41 +1,80 @@
 import { DisplayUtil } from '../../utils/DisplayUtil'
 import { SwiperComponentUIBean } from './SwiperComponentUIBean'
 import { SelSwiperTabSource, SwiperImageArray, SwiperImageUiBean } from './SwiperImageUiBean'
+
 const PreOrNextMargin = 52
 const VEHICLE_IMG_WIDTH = 202
 const VEHICLE_IMG_HEIGHT = 121
 
-/**车型图片布局*/
+/**
+ * 滚动图片组件
+ */
 @Component
 export struct SwiperImageComponent {
-  //车图数据
-  @ObjectLink vehicleImageArray: SwiperImageArray
+  /**
+   * 轮播图UI数据
+   */
   @State swiperUIBean: SwiperComponentUIBean = new SwiperComponentUIBean()
-  /**当前车型下标*/
+  /**
+   * 图片数据源
+   */
+  @ObjectLink vehicleImageArray: SwiperImageArray
+  /**
+   * 当前图片下标
+   */
   @Prop @Watch('onCurrentIndexChange') currentVehicleIndex: number
-  /**滑动或者上下翻页改变车型下标*/
+  /**
+   * 透明度
+   */
+  @State opacityList: number[] = []
+  /**
+   * 缩放
+   */
+  @State scaleList: number[] = []
+  /**
+   *左边距
+   */
+  @State leftMarginList: number[] = []
+  /**
+   * 监听点击图片
+   */
+  onImageClick?: (imageBean: SwiperImageUiBean) => void
+  /**
+   * 滑动或者上下翻页改变图片下标
+   */
   private indexChangeAction?: (source: SelSwiperTabSource, index: number) => void
+  /**
+   * 滚动控制器
+   */
   private swiperController: SwiperController = new SwiperController()
+  /**
+   * 操作图片的下标
+   */
   private imageIndex: number = 0
-  @State private initImageIndex: number = 0
+  /**
+   * 改变图片的来源
+   */
   private source: SelSwiperTabSource = SelSwiperTabSource.SOURCE_TAB_VIEW_PAGER
-
-  /**监控车型下标改变数据变化*/
-  private onCurrentIndexChange() {
-    if (this.currentVehicleIndex != this.imageIndex) {
-      this.swiperController.changeIndex(this.currentVehicleIndex, true)
-      this.imageIndex = this.currentVehicleIndex
-    }
-  }
-
-  onDidBuild(): void {
-    setTimeout(() => {
-      if (this.currentVehicleIndex != this.imageIndex) {
-        this.swiperController.changeIndex(this.currentVehicleIndex, false)
-        this.imageIndex = this.currentVehicleIndex
-      }
-    }, 50)
-  }
+  /**
+   * 最低透明度
+   */
+  private MIN_ALPHA: number = 0.4
+  /**
+   * 最小缩放比
+   */
+  private MIN_SCALE: number = 0.6
+  /**
+   * 最大放比
+   */
+  private MAX_SCALE: number = 1
+  /**
+   *  最大透明度
+   */
+  private MAX_OPACITY: number = 1
+  /**
+   * 最小透明度
+   */
+  private MIN_OPACITY: number = 0
 
   build() {
     Stack({ alignContent: Alignment.TopStart }) {
@@ -46,7 +85,7 @@ export struct SwiperImageComponent {
               .objectFit(ImageFit.Contain)
               .alt(this.swiperUIBean.altImage)
               .onClick(() => {
-                console.log("===点击了=="+imageBean.swiperId)
+                this.onImageClick?.(imageBean)
               })
               .height("100%")
               .scale({ x: this.getSingleScale(vehicleIndex), y: this.getSingleScale(vehicleIndex) })
@@ -63,7 +102,7 @@ export struct SwiperImageComponent {
       .autoPlay(false)
       .indicator(false)
       .loop(false)
-      .index(this.initImageIndex)
+      .index(0)
       .displayCount(1)
       .prevMargin(PreOrNextMargin)
       .nextMargin(PreOrNextMargin)
@@ -107,15 +146,20 @@ export struct SwiperImageComponent {
     .height(VEHICLE_IMG_HEIGHT)
   }
 
-  private MIN_ALPHA: number = 0.4
-  private MIN_SCALE: number = 0.6
-  private MAX_SCALE: number = 1
-  private MAX_OPACITY: number = 1
-  private MIN_OPACITY: number = 0
-  @State opacityList: number[] = []
-  @State scaleList: number[] = []
-  @State leftMarginList: number[] = []
+  onDidBuild(): void {
+    setTimeout(() => {
+      if (this.currentVehicleIndex != this.imageIndex) {
+        this.swiperController.changeIndex(this.currentVehicleIndex, false)
+        this.imageIndex = this.currentVehicleIndex
+      }
+    }, 50)
+  }
 
+  /**
+   * 获取透明度
+   * @param index
+   * @returns
+   */
   private getOpacity(index: number): number {
     if (this.opacityList.length <= index) {
       if (this.currentVehicleIndex == index) {
@@ -134,6 +178,11 @@ export struct SwiperImageComponent {
     return opacity
   }
 
+  /**
+   * 获取图片透明度
+   * @param index
+   * @returns
+   */
   private getImageOpacity(index: number): number {
     let opacity = this.getOpacity(index)
     if (opacity < this.MIN_ALPHA) {
@@ -145,6 +194,11 @@ export struct SwiperImageComponent {
     return opacity
   }
 
+  /**
+   * 设置透明度
+   * @param index
+   * @param position
+   */
   private setOpacity(index: number, position: number) {
     if (this.vehicleImageArray.length != this.opacityList.length) {
       this.opacityList.splice(0, this.opacityList.length)
@@ -156,6 +210,11 @@ export struct SwiperImageComponent {
     this.opacityList[index] = opacity
   }
 
+  /**
+   * 获取单个图片透明度
+   * @param index
+   * @returns
+   */
   private getScale(index: number): number {
     if (this.scaleList.length <= index) {
       if (this.currentVehicleIndex == index) {
@@ -167,6 +226,11 @@ export struct SwiperImageComponent {
     return this.scaleList[index]
   }
 
+  /**
+   * 获取单个图片缩放
+   * @param index
+   * @returns
+   */
   private getSingleScale(index: number): number {
     let scale = this.getScale(index)
     if (scale < this.MIN_SCALE) {
@@ -178,6 +242,11 @@ export struct SwiperImageComponent {
     return scale
   }
 
+  /**
+   * 设置缩放
+   * @param index
+   * @param position
+   */
   private setScale(index: number, position: number) {
     if (this.vehicleImageArray.length != this.scaleList.length) {
       this.scaleList.splice(0, this.scaleList.length)
@@ -188,6 +257,11 @@ export struct SwiperImageComponent {
     this.scaleList[index] = 1 - Math.abs(position)
   }
 
+  /**
+   * 获取左边距
+   * @param index
+   * @returns
+   */
   private getLeftMargin(index: number): number {
     if (this.leftMarginList.length <= index) {
       if (this.currentVehicleIndex == index) {
@@ -207,6 +281,11 @@ export struct SwiperImageComponent {
     return this.leftMarginList[index]
   }
 
+  /**
+   * 设置左边距
+   * @param index
+   * @param position
+   */
   private setLeftMargin(index: number, position: number) {
     if (this.vehicleImageArray.length != this.leftMarginList.length) {
       this.leftMarginList.splice(0, this.leftMarginList.length)
@@ -225,6 +304,16 @@ export struct SwiperImageComponent {
       margin = maxMargin
     }
     this.leftMarginList[index] = margin
+  }
+
+  /**
+   * 监控图片下标改变数据变化
+   */
+  private onCurrentIndexChange() {
+    if (this.currentVehicleIndex != this.imageIndex) {
+      this.swiperController.changeIndex(this.currentVehicleIndex, true)
+      this.imageIndex = this.currentVehicleIndex
+    }
   }
 }
 

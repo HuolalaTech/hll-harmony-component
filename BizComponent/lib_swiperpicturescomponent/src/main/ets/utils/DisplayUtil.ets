@@ -4,8 +4,9 @@ import { display } from '@kit.ArkUI';
  * 屏幕显示工具类
  */
 export class DisplayUtil {
-  private static TAG = "DisplayUtil"
-
+  /**
+   * 获取屏幕宽度，单位px
+   */
   public static screenWidth(): number {
     try {
       let displayClass = display.getDefaultDisplaySync();
@@ -16,11 +17,18 @@ export class DisplayUtil {
     return 1080
   }
 
+  /**
+   * 获取屏幕宽度，单位vp
+   */
   public static screenWidthVp(): number {
     let width = DisplayUtil.screenWidth()
     return px2vp(width)
   }
 
+  /**
+   *
+   * @returns
+   */
   public static screenHeight() {
     try {
       let displayClass = display.getDefaultDisplaySync();
@@ -31,6 +39,9 @@ export class DisplayUtil {
     return 1920
   }
 
+  /**
+   * 获取屏幕高度，单位vp
+   */
   public static screenHeightVp() {
     let height = DisplayUtil.screenHeight()
     return px2vp(height)

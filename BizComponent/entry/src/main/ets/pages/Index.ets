@@ -36,7 +36,7 @@ struct Index {
             .height(100)
             .width("100%")
             .textAlign(TextAlign.Center)
-            .backgroundColor(Color.Yellow)
+            .backgroundColor(Color.Green)
             .onClick(() => {
               router.pushUrl({ url: 'pages/Test3' })
             })

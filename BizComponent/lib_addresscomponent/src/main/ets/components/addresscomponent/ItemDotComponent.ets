@@ -1,13 +1,28 @@
 import { CommonComponentUIBean } from './AddressComponentConstant'
 
+
+/**
+ * 构建item小圆点
+ */
 @Component
 export struct ItemDotComponent {
-  @Prop private index: number = 0
-  @Prop private allLength: number = 0
+  /**
+   * UI的设置参数
+   */
   @State private commonUIBean: CommonComponentUIBean = new CommonComponentUIBean()
+  /**
+   * 当前索引
+   */
+  @Prop private index: number = 0
+  /**
+   * 地址列表总长度
+   */
+  @Prop private allLength: number = 0
 
+  /**
+   * 绘制UI
+   */
   build() {
-    //icon小圆点
     Blank()
       .width(this.commonUIBean.pointWidth)
       .height(this.commonUIBean.pointHeight)
